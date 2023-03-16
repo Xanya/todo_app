@@ -1,0 +1,57 @@
+{% extends 'base/main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container-upper center register">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="me-4" style="color:antiquewhite;">Profile</h1>
+                </div>
+                <div class="col mt-2" style="text-align: end;">
+                    <a class="btn btn-light" href="{% url 'todo-home' %}" role="button">Back to HomePage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if messages %}
+        <div class="register-section center-registration">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="register-section center-registration">
+        <div class="pt-3">
+            <h1>{{ user.username }}</h1>
+            <hr>
+            <h1>Achievments:</h1>
+            {% for achievment in achievments %}
+                <h2>{{ achievment }}</h2>
+            {% endfor %}
+            <hr>
+            <h2>Completed tasks:</h2>
+            {% if not tasks %}
+                <h3>You have no completed tasks!</h3>
+            {% endif %}
+        </div>
+    </div>
+    {% if tasks %}
+        <div class="list-groupe center">
+            {% for task in tasks %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ task.title }}</h5>
+                    </div>
+                    {% if task.description %}
+                        <p class="mb-1">{{ task.description }}</p>
+                    {% endif %}
+                    <small class="text-muted">Task Completed</small>
+                    <a class="btn btn-secondary btn-task" href="{% url 'task-update' task.id %}">Update</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

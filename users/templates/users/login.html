@@ -1,0 +1,34 @@
+{% extends 'base/main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container-upper center register">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="me-4" style="color:antiquewhite;">Welcome back</h1>
+                </div>
+                <div class="col mt-2" style="text-align: end;">
+                    <a class="btn btn-light" href="{% url 'todo-home' %}" role="button">Back to HomePage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="register-section center-registration">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group mb-2">
+                <legend class="border-bottom mb-4">Login</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group mb-2">
+                <button class="btn btn-pink" type="submit">Log In</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need an Account? <a class="ms-2" href="{% url 'register' %}">Sign Up</a>
+            </small>
+        </div>
+    </div>
+{% endblock %}

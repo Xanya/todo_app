@@ -1,0 +1,29 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <div class="container-upper center register">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="me-4" style="color:antiquewhite;">Task completed?</h1>
+                </div>
+                <div class="col mt-2" style="text-align: end;">
+                    <a class="btn btn-light" href="{% url 'todo-home' %}" role="button">Back to HomePage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="register-section center-registration">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Are you sure you want to complete "{{ task.title }}"?</legend>
+            </fieldset>
+            <div class="form-group mb-2">
+                <button class="btn btn-danger" type="submit">Complete</button>
+                <a class="btn btn-secondary" href="{% url 'todo-home' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <br>
+{% endblock %}

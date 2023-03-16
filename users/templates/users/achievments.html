@@ -1,0 +1,32 @@
+{% extends 'base/main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container-upper center register">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="me-4" style="color:antiquewhite;">Achievments</h1>
+                </div>
+                <div class="col mt-2" style="text-align: end;">
+                    <a class="btn btn-light" href="{% url 'todo-home' %}" role="button">Back to HomePage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="register-section center-registration">
+        <div class="pt-3">
+            <h1>{{ user.username }}</h1>
+            <hr>
+            <h1>Achievments:</h1>
+            {% if achievment %}
+                <h2>{{ achievment }}</h2>
+            {% endif %}
+            <hr>
+            <h2>Completed tasks:</h2>
+            {% if not tasks %}
+                <h3>You have no completed tasks!</h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

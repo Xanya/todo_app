@@ -1,0 +1,23 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <div class="container-upper center register">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="me-4" style="color:antiquewhite;">You have been logged out</h1>
+                </div>
+                <div class="col mt-2" style="text-align: end;">
+                    <a class="btn btn-light" href="{% url 'todo-home' %}" role="button">Back to HomePage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="register-section center-registration">
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a href="{% url 'login' %}">Log In Again</a>
+            </small>
+        </div>
+    </div>
+{% endblock %}

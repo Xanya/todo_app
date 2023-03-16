@@ -1,0 +1,99 @@
+{% extends 'base/main.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <div class="container-upper center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% if user.is_authenticated %}
+                        <h1 class="me-4" style="color:antiquewhite">Hello, {{ user.username }}!</h1>
+                    {% else %}
+                        <h1 class="me-4" style="color:antiquewhite">Hello</h1>
+                    {% endif %}
+                </div>
+                <div class="col" style="text-align: end; padding: 8px;">
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-light" href="{% url 'profile' %}" role="button">Profile</a>
+                        <a class="btn btn-light" href="{% url 'logout' %}" role="button">Logout</a>
+                    {% else %}
+                        <a class="btn btn-light" href="{% url 'login' %}" role="button">Login</a>
+                        <a class="btn btn-light" href="{% url 'register' %}" role="button">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+                <span class="me-4" style="color:antiquewhite;position: absolute;bottom: 0;left: 0;margin-left: 1rem;margin-bottom: 5px;"><i>You have {{ tasks_len }} active tasks!</i></span>
+            {% else %}
+                <span class="me-4" style="color:antiquewhite;position: absolute;bottom: 0;left: 0;margin-left: 1rem;margin-bottom: 5px;"><i>You need to login to see your tasks!</i></span>
+            {% endif %}
+        </div>
+    </div>
+    {% if messages %}
+        <div class="register-section center-registration">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <div class="register-section center-registration">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <button class="btn btn-pink mt-2" type="submit">Create Task</button>
+            </form>
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ completed_form|crispy }}
+                </fieldset>
+            </form>
+        </div>
+    {% endif %}
+    {% if tasks %}
+        <div class="list-groupe center">
+            {% for task in tasks %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                    {% if task.active %}
+                        <h5 class="mb-1">{{ task.title }}</h5>
+                    {% else %}
+                        <h5 class="mb-1"><s>{{ task.title }}</s></h5>
+                    {% endif %}
+                    <small class="text-muted">{{ task.date_created|naturaltime }}</small>
+                    </div>
+                    {% if task.description %}
+                        <p class="mb-1">{{ task.description }}</p>
+                    {% endif %}
+                    {% if task.active %}
+                        <small class="text-muted">Currently Active</small>
+                    {% else %}
+                        <small class="text-muted">Not Active</small>
+                    {% endif %}
+                    <a class="btn btn-outline-danger btn-task" href="{% url 'task-delete' task.id %}">Delete</a>
+                    <a class="btn btn-outline-secondary btn-task" href="{% url 'task-update' task.id %}">Update</a>
+                    <a class="btn btn-success btn-task" href="{% url 'complete-update' task.id %}">Complete</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1>Hello</h1>
+    {% endif %}
+    <br>
+{% endblock %}
+
+<a href="#" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ task.title }}</h5>
+      <small class="text-muted">3 days ago</small>
+    </div>
+    <p class="mb-1">{{ task.description }}</p>
+    <small class="text-muted">And some muted small print.</small>
+</a>
