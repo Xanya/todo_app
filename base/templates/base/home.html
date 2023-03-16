@@ -84,7 +84,11 @@
             {% endfor %}
         </div>
     {% else %}
-        <h1>Hello</h1>
+        <div class="list-groupe center">
+            <div class="list-group-item list-group-item-action">
+                <a class="btn btn-light" style="text-align: center; margin: auto; display: flow-root;" href="{% url 'register' %}" role="button">Register Now!</a>
+            </div>
+        </div>
     {% endif %}
     <br>
 {% endblock %}
